@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    container_name: nextcloud-db
+    networks:
+      - nextcloud_network
+    volumes:
+      - db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=nextcloud
+      - POSTGRES_USER=nextcloud
+      - POSTGRES_PASSWORD=nextsecret
+
+  app:
+    image: nextcloud:latest
+    container_name: nextcloud-app
+    networks:
+      - nextcloud_network
+    ports:
+      - 8080:80
+    volumes:
+      - /nextcloud:/var/www/html
+      - nextcloud:/var/www/html/data
+    depends_on:
+      - db
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_DB=nextcloud
+      - POSTGRES_USER=nextcloud
+      - POSTGRES_PASSWORD=nextsecret
+      - NEXTCLOUD_ADMIN_USER=nextcloud
+      - NEXTCLOUD_ADMIN_PASSWORD=nextsecret
+      - NEXTCLOUD_TRUSTED_DOMAINS=172.30.1.*
+
+volumes:
+  db:
+  nextcloud:
+
+networks:
+  nextcloud_network:
