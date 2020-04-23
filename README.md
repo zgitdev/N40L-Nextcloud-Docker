@@ -7,6 +7,10 @@ docker-compose로 Nextcloud를 구성하게 되어 코드 저장 및 공유 용�
 ### 1. HP ProLiant MicroServer N40L
 하드웨어 스펙 : https://www8.hp.com/nz/en/pdf/HP_ProLiant_MicroServer_tcm_194_1127013.pdf
 
+RAM : 4GB
+DISK : SDD 64GB x 1
+       HDD 2TB x 4
+
 ### 2. Ubunto 18.04 LTS 설치
 ... 수정중 ...
 
