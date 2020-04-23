@@ -10,4 +10,22 @@ docker-compose로 Nextcloud를 구성하게 되어 코드 저장 및 공유 용�
 ### 2. Ubunto 18.04 LTS 설치
 ... 수정중 ...
 
-### 3. Docker, Docker-compose 설치
+### 3. Docker, Docker Compose 설치
+... 수정중 ...
+
+## 설치 방법
+### 1. Git Clone
+
+### 2. docker-compose.yml 수정
+
+### 3. docker-compose 명령으로 서버 시작
+
+### 4. 로그인 페이지 확인
+
+## Nextcloud 시작/중지
+
+### 시작
+
+### 중지
+
+## 데이터 백업
