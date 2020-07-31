@@ -2,41 +2,36 @@ version: '3'
 
 services:
   db:
-    image: postgres
-    container_name: nextcloud-db
-    networks:
-      - nextcloud_network
+    image: postgres:alpine
+    restart: always
     volumes:
       - db:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_DB=nextcloud
-      - POSTGRES_USER=nextcloud
-      - POSTGRES_PASSWORD=nextsecret
+    env_file:
+      - ./env/db.env
 
   app:
-    image: nextcloud:latest
-    container_name: nextcloud-app
-    networks:
-      - nextcloud_network
+    image: nextcloud:fpm-alpine
+    restart: always
+    volumes:
+      - nextcloud:/var/www/html
+    environment:
+      - POSTGRES_HOST=db
+    env_file:
+      - ./env/db.env
+      - ./env/nextcloud.env
+    depends_on:
+      - db
+
+  web:
+    build: ./web
+    restart: always
     ports:
       - 8080:80
     volumes:
-      - /nextcloud:/var/www/html
-      - nextcloud:/var/www/html/data
+      - nextcloud:/var/www/html:ro
     depends_on:
-      - db
-    environment:
-      - POSTGRES_HOST=db
-      - POSTGRES_DB=nextcloud
-      - POSTGRES_USER=nextcloud
-      - POSTGRES_PASSWORD=nextsecret
-      - NEXTCLOUD_ADMIN_USER=nextcloud
-      - NEXTCLOUD_ADMIN_PASSWORD=nextsecret
-      - NEXTCLOUD_TRUSTED_DOMAINS=172.30.1.*
+      - app
 
 volumes:
   db:
   nextcloud:
-
-networks:
-  nextcloud_network:
